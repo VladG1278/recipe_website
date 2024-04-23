@@ -1,0 +1,18 @@
+#Logs
+logs
+*.log
+*node_modules
+*.local
+#Editor Directory and Files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.env
+package-lock.json
+package.json
+meal-planning-central-high-resolution-logo-transparent.png
