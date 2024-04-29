@@ -13,6 +13,7 @@ logs
 *.sln
 *.sw?
 .env
+supabaseClient.js
 package-lock.json
 package.json
 meal-planning-central-high-resolution-logo-transparent.png
