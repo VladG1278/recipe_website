@@ -24,5 +24,38 @@
             </nav>
         </div>
     </header>
+    <div class="wrapper">
+        <div class="calendarContainer">
+            <div class="calendarHeader">
+                <button class="monthPickerButton" id="previous" onclick="previous()">&#8592;</button>
+                <h1 id="monthAndYear">Calendar Month</h1>
+                <button class="monthPickerButton" id="next" onclick="next()">&#8594;</button>
+            </div>
+                <table class="table-calendar"
+                       id="calendar"
+                       data-lang="en">
+                    <thead id="thead-month"></thead>
+                        <tbody id="calendar-body"></tbody>
+                    
+                </table>
+        </div>
+        <div class="recipeViewerContainer">
+            <div class="recipeAdderInput">
+                <ul>
+                    <li>Recipe 1 Here</li>
+                    <li>Recipe 2 Here</li>
+                    <li>Recipe 3 Here</li>
+                </ul>
+            </div>
+            <div class="dayRecipes">
+                <ul id="currentRecipes">
+                    <li>Test</li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+    <script src = "JavaScript/calendar.js"></script>
 </body>
 </html>
