@@ -1,11 +1,14 @@
 // https://www.geeksforgeeks.org/how-to-create-a-dynamic-calendar-in-html-css-javascript/
 
+
+
 //populate calendar
 today = new Date();
 currentMonth = today.getMonth();
 currentYear = today.getFullYear();
-let calendar = document.getElementById("calendar");
- 
+
+
+let calendar = document.getElementById("calendar"); 
 let months = [
     "January",
     "February",
@@ -20,6 +23,8 @@ let months = [
     "November",
     "December"
 ];
+
+
 let days = [
     "Sun", "Mon", "Tue", "Wed",
     "Thu", "Fri", "Sat"];
@@ -51,6 +56,7 @@ function previous() {
     showCalendar(currentMonth, currentYear);
 }
 
+//Function to Display Clendar
 function showCalendar(month, year) {
     let firstDay = new Date(year, month, 1).getDay();
     tbl = document.getElementById("calendar-body");
@@ -90,23 +96,44 @@ function showCalendar(month, year) {
         }
         tbl.appendChild(row);
     }
+    setUpClicking();
 }
 function daysInMonth(iMonth, iYear) {
     return 32 - new Date(iYear, iMonth, 32).getDate();
 }
 
-cellClassNames = document.getElementsByClassName("date-picker")
-console.log(cellClassNames)
-for (var i =0; i < cellClassNames.length; i++) {
-    cellClassNames[i].addEventListener('click', function(e) {
-        e = e || window.event;
-        var element = e.target || e.srcElement
-            let cellDate = {number:element.getAttribute("data-date"), month: element.getAttribute("data-month"), year: element.getAttribute("data-year"), monthName: element.getAttribute("data-month_name")};
-        console.log(cellDate)
-    }, false);
+//Intialize Date at Bottom Header
+var cellDate = {number:today.getDate(), month:currentMonth, year:currentYear, monthName:months[currentMonth]};
+dateHeader(cellDate);
+
+//Add Event Listeners to All Cells that highlight and change date when clicked
+function setUpClicking () { 
+    cellClassNames = document.getElementsByClassName("date-picker");
+    for (var i =0; i < cellClassNames.length; i++) {
+        cellClassNames[i].addEventListener('click', function(e) {
+            e = e || window.event;
+            var element = e.target || e.srcElement;
+                cellDate = {number:element.getAttribute("data-date"), month:element.getAttribute("data-month"), year: element.getAttribute("data-year"), monthName: element.getAttribute("data-month_name")};
+                dateHeader();
+                unHighlightAll(cellClassNames);
+                element.style.backgroundColor = "yellow";
+        }, false);
+        if (cellClassNames[i].getAttribute("data-date") == today.getDate() && cellClassNames[i].getAttribute("data-month") - 1 == today.getMonth() && cellClassNames[i].getAttribute("data-year") == today.getFullYear()) {
+            cellClassNames[i].style.backgroundColor = "yellow";
+        }
+    }
 }
 
-    
+//Set the Date at the Bottom Header
+function dateHeader(){
+    dateHeader1 = document.getElementById("currentDateAdder");
+    dateHeader1.innerHTML = cellDate.monthName + " " + cellDate.number + ", " + cellDate.year;
+}
 
 
+function unHighlightAll (cellClassNames) {
+    for(i =0; i < cellClassNames.length; i++) {
+        cellClassNames[i].style.backgroundColor = "";
+    }
+}
 

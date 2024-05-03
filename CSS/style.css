@@ -24,7 +24,7 @@ body{
     display: flex;
     justify-content: space-between;
     align-content: center;
-    height: 4.5rem;
+    height: 4rem;
 }
 
 header{
@@ -63,14 +63,56 @@ header{
     cursor: pointer;
 }
 
+/* Links */
+a:link{
+    color:#333;
+    background-color: transparent;
+}
+
+a:visited{
+    color:#333;
+    background-color: transparent;
+}
+
+.logoImg{
+    height: 4.0rem;
+    width: 4.0rem;
+    margin-right: .2rem;
+    margin-top: .35rem;
+    align-self: center;
+}
+
+
+/* Wrapper for Everything */
+.biggestWrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Wrapper for Calendar and Recipe Input */
+.wrapper{
+    max-height: 100vh;
+    height: 100vh - 4.5rem;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
 /* Calendar */
 .calendarContainer{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    align-self: center;
+    margin: 5px;
     background-color:aliceblue;
-    max-height:480px;
+    max-height:407.2px;
+    margin-bottom: 5px;
+    max-width: 75vw;
+    width: 800px;
+    border-radius: 10px;
+    
 }
 
 
@@ -105,22 +147,24 @@ header{
     position: sticky;
 }
 
-
+.calendarBodyContainer{
+    max-height: 343.2;
+    overflow: auto;
+}
 .table-calendar{
-    max-height: 416px;
+    max-height: 400px;
     max-width: 1100px;
 }
 
 #calendar-body{
     font-family: sans-serif;
-    font-size: 25px;
+    font-size: 23px;
     width: 1rem;
 }
 
 #thead-month{
     font-family: sans-serif;
-    font-size: 32px;
-    
+    font-size: 30px;
 }
 
 
@@ -137,30 +181,51 @@ header{
 }
 
 .date-picker:hover{
-    box-shadow: inset 135px 0 0 0 brown;
+    box-shadow: inset 135px 0 0 0 yellow;
     cursor: pointer;
     
 }
 
+/* Recipe Viewer and Adder at Bottom */
 
-
-
-
-
-/* Links */
-a:link{
-    color:#333;
-    background-color: transparent;
+.recipeViewerContainer{
+    margin: 5px;
+    padding: 1px;
+    display: flex;
+    flex-direction: column;
+    border: 10px;
+    max-height: 30vh;
+    height: 300px;
+    background-color: gray;
+    max-width: 75vw;
+    width: 800px;
+    align-self: center;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    
 }
 
-a:visited{
-    color:#333;
-    background-color: transparent;
+.recipeViewerContainer h2 {
+    margin: 2px;
 }
 
-img{
-    height: 4.05rem;
-    width: 4.05rem;
-    margin-right: 1rem;
+.recipeViewer{
+    margin: 2px;
+    padding: 7px;
+    max-width: 80vw;
+    width: 650px;
+    max-height: 22vh;
+    height: 22vh;
+    background-color: grey;
+    overflow: auto;
+    border-radius: 10px;
+    font-family: sans-serif;
 }
+
+
+
+
+
+
 

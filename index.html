@@ -12,7 +12,7 @@
         <div >
             <nav class= "navBar">
                 <ul class= "navBarTitleList">
-                    <li><img src="meal-planning-central-high-resolution-logo-transparent.png" alt="website-logo"></li>
+                    <li><img class="logoImg" src="meal-planning-central-high-resolution-logo-transparent.png" alt="website-logo"></li>
                     <li><b>Meal Planning Central</b></li>
                 </ul>
                 <ul class="navBarList">
@@ -24,37 +24,40 @@
             </nav>
         </div>
     </header>
-    <div class="wrapper">
-        <div class="calendarContainer">
-            <div class="calendarHeader">
-                <button class="monthPickerButton" id="previous" onclick="previous()">&#8592;</button>
-                <h1 id="monthAndYear">Calendar Month</h1>
-                <button class="monthPickerButton" id="next" onclick="next()">&#8594;</button>
-            </div>
-                <table class="table-calendar"
-                       id="calendar"
-                       data-lang="en">
-                    <thead id="thead-month"></thead>
-                        <tbody id="calendar-body"></tbody>
-                    
-                </table>
+    <div class="biggestWrapper">
+        <div class="recipeAdder" id="dayRecipes">
+            <ul id="currentRecipes">
+                <li>Test</li>
+            </ul>
         </div>
-        <div class="recipeViewerContainer">
-            <div class="recipeAdderInput">
-                <ul>
-                    <li>Recipe 1 Here</li>
-                    <li>Recipe 2 Here</li>
-                    <li>Recipe 3 Here</li>
-                </ul>
+        <div class="wrapper">
+            <div class="calendarContainer">
+                <div class="calendarHeader">
+                    <button class="monthPickerButton" id="previous" onclick="previous()">&#8592;</button>
+                    <h1 id="monthAndYear">Calendar Month</h1>
+                    <button class="monthPickerButton" id="next" onclick="next()">&#8594;</button>
+                </div>
+                <div class = calendarBodyContainer>
+                    <table class="table-calendar"
+                        id="calendar"
+                        data-lang="en">
+                        <thead id="thead-month"></thead>
+                            <tbody id="calendar-body"></tbody>
+                        
+                    </table>
+                </div>
             </div>
-            <div class="dayRecipes">
-                <ul id="currentRecipes">
-                    <li>Test</li>
-                </ul>
+            <div class="recipeViewerContainer">
+                <h2 id="currentDateAdder">Test</h2>
+                <div class="recipeViewer" id="recipeAdderInput">
+                    <ul>
+                        <li>Recipe 1 Here</li>
+                        <li>Recipe 2 Here</li>
+                        <li>Recipe 3 Here</li>
+                    </ul>
+                </div>
             </div>
         </div>
-
-
     </div>
     <script src = "JavaScript/calendar.js"></script>
 </body>
