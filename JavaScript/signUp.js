@@ -8,7 +8,6 @@ button.addEventListener("click", myFunction)
 function myFunction(event){
     event.preventDefault();
     createAcc();
-    alert("Sign Up Successful Login Now");
 }
 
 const createAcc = async() =>{
@@ -18,6 +17,7 @@ const createAcc = async() =>{
     email: username,
     password: passwords,
   })
+  alert("Sign Up Successful Login Now");
   
 }
 
