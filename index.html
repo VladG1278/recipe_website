@@ -19,17 +19,25 @@
                     <li class="liItems"><a href="index.html">Home</a></li>
                     <li class="liItems"><a href="">Recipes</a></li>
                     <li class="liItems"><a href="">Saved</a></li>
-                    <li class="liItems"><a href="Pages\loginPage.html">Login</a></li>
+                    <li id = "signOut" class="liItems"><a href="Pages\loginPage.html">Login</a></li>
                 </ul>
             </nav>
         </div>
     </header>
     <div class="biggestWrapper">
+
+
         <div class="recipeAdder" id="dayRecipes">
-            <ul id="currentRecipes">
-                <li>Test</li>
+            <form class = "searchBar" action="">
+                <input id = "searchBar" type="text" placeholder='Search&#x1F50E;' >
+            </form>
+            
+            <ul class= "recipeList" id="currentRecipes">
             </ul>
         </div>
+
+
+
         <div class="wrapper">
             <div class="calendarContainer">
                 <div class="calendarHeader">
@@ -60,5 +68,6 @@
         </div>
     </div>
     <script src = "JavaScript/calendar.js"></script>
+    <script src = "JavaScript/home.js" type = "module"></script>
 </body>
 </html>

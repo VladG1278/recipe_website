@@ -1,7 +1,6 @@
 // https://www.geeksforgeeks.org/how-to-create-a-dynamic-calendar-in-html-css-javascript/
 
 
-
 //populate calendar
 today = new Date();
 currentMonth = today.getMonth();
@@ -136,4 +135,3 @@ function unHighlightAll (cellClassNames) {
         cellClassNames[i].style.backgroundColor = "";
     }
 }
-

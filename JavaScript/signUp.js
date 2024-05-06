@@ -8,17 +8,18 @@ button.addEventListener("click", myFunction)
 function myFunction(event){
     event.preventDefault();
     createAcc();
- /*    username = document.getElementById("username").value;
-    passwords = document.getElementById("password").value; */
+    alert("Sign Up Successful Login Now");
 }
 
 const createAcc = async() =>{
-const { data, error } = await supabase.auth.signUp({
-    email: 'bo@gmail.com',
-    password: 'test2134',
+  username = document.getElementById("username").value;
+  passwords = document.getElementById("password").value;
+  const { data, error } = await supabase.auth.signUp({
+    email: username,
+    password: passwords,
   })
+  
 }
-
 
 
 
