@@ -154,30 +154,69 @@ const addRecipeDate = async(id) => {
 //Displays Recipe on Search Bar on Left
 //search is boolean, false means no search
 //number is length of results to display at a time
-const displayRecipesSearch = async(number, search) =>{
-    const { data, error } = await supabase
-        .from('recipeSample')
-        .select()
-    //console.log(data);
-    for(var i = 0; i < number; i++) {
-        setRecipeCardSearch(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID);
-    }
-    //Change highlighted buttons
-    let currentLikes = await getCurrentLiked();
-    let currentLikesList = currentLikes.split(",");
-    let recipeResults = document.getElementsByClassName("recipe1Button");
-    for(var i=0; i < recipeResults.length; i++) {
-        for (var j=1; j<currentLikesList.length; j++) {
-            if(currentLikesList[j] === recipeResults[i].parentElement.parentElement.parentElement.getAttribute('id')) {
-                recipeResults[i].style.backgroundColor = 'yellow';
+const displayRecipesSearch = async(number, search, searchWord) =>{
+    if (!search) {
+        const { data, error } = await supabase
+            .from('recipeSample')
+            .select()
+        //console.log(data);
+        for(var i = 0; i < number; i++) {
+            setRecipeCardSearch(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID);
+        }
+        //Change highlighted buttons
+        let currentLikes = await getCurrentLiked();
+        let currentLikesList = currentLikes.split(",");
+        let recipeResults = document.getElementsByClassName("recipe1Button");
+        for(var i=0; i < recipeResults.length; i++) {
+            for (var j=1; j<currentLikesList.length; j++) {
+                if(currentLikesList[j] === recipeResults[i].parentElement.parentElement.parentElement.getAttribute('id')) {
+                    recipeResults[i].style.backgroundColor = 'yellow';
+                }
             }
         }
-    }
-    addEventListenerLikeButtons();
-    addEventListenerAddButtons();
-}
+        addEventListenerLikeButtons();
+        addEventListenerAddButtons();
+    } else {
+        if (searchWord === "") {
+            alert('Please Enter a Word Next Time!')
+        }else {
+            
+            const { data, error } = await supabase
+                .from('recipeSample')
+                .select()
+                .textSearch('Title', searchWord)
+            console.log(data);
+            if (data.length === 0) {
+                alert("No Results Found!");
+                removeSearch();
+                displayRecipesSearch (1000, false, "");
+            } else {
+                removeSearch();
+                for(var i = 0; i < data.length; i++) {
+                    setRecipeCardSearch(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID);
+                }
+                //Change highlighted buttons
+                let currentLikes = await getCurrentLiked();
+                let currentLikesList = currentLikes.split(",");
+                let recipeResults = document.getElementsByClassName("recipe1Button");
+                for(var i=0; i < recipeResults.length; i++) {
+                    for (var j=1; j<currentLikesList.length; j++) {
+                        if(currentLikesList[j] === recipeResults[i].parentElement.parentElement.parentElement.getAttribute('id')) {
+                            recipeResults[i].style.backgroundColor = 'yellow';
+                        }
+                    }
+                }
+                addEventListenerLikeButtons();
+                addEventListenerAddButtons();
+            }
 
-displayRecipesSearch(50, false);
+
+            
+        }
+    }
+}
+    
+displayRecipesSearch (1000, false, "");
 setUpClicking();
 
 
@@ -426,9 +465,20 @@ const removeRecipeDate = async (id) => {
 
 
 //Check for click on recipe title area. That opens new link with recipe information.
+document.getElementById("searchSubmit").addEventListener("click", myFunction)
+function myFunction(event){
+    event.preventDefault();
+    displayRecipesSearch(100, true, document.getElementById("searchBar").value.replaceAll(" ", "+"));
+    document.getElementById("searchBar").value = "";
+}
 
-
-
+//Remove All Searches
+function removeSearch(){
+    let lis = document.getElementsByClassName("recipeItem")
+    while (lis.length > 0) {
+        lis[0].remove();
+    }
+}
 
 
 
