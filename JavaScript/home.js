@@ -40,7 +40,6 @@ function addEventListenerAddButtons (){
         buttonsAdd[i].addEventListener('click', function(ea) {
             ea = ea || window.event;
             var elementButtonA = ea.target || ea.srcElement;
-            console.log("test");
                 let id = elementButtonA.parentElement.parentElement.parentElement.getAttribute('id');
                 addRecipeDate(id);
                 setTimeout(displayDateRecipes, 2000);
@@ -70,7 +69,6 @@ function addEventListenerRemoveButtons (){
             ec = ec || window.event;
             var elementButtonB = ec.target || ec.srcElement;
                 let id = elementButtonB.parentElement.parentElement.getAttribute('id');
-                console.log(id)
                 removeRecipeDate(id);
                 setTimeout(displayDateRecipes, 2000);
         }, false);
@@ -88,7 +86,6 @@ const getDateRecipe = async(ids) => {
         .from('recipeSample')
         .select()
         .in('ID', ids)
-        console.log(data);
     for(var i =0; i <data.length; i++) {
         setRecipeCardDate(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID, data[i].Link);
     }
@@ -102,7 +99,6 @@ const displayDateRecipes = async() => {
     const { data, error } = await supabase
         .from('User Recipe')
         .select('date_recipe')
-        console.log(data);
     let dateList = data[0].date_recipe.split("|");
     let date = getDate();
     for (var i=1; i <dateList.length; i++) {
@@ -141,7 +137,6 @@ const addRecipeDate = async(id) => {
         if(dateStuff.id) {
             startIndex = dateStuff.currentData.indexOf(dateFormat) + dateFormat.length;
             recipeStuff = dateStuff.currentData.substring(0,startIndex) + ","+id + dateStuff.currentData.substring(startIndex);
-            console.log("recipeStuff");
         }else {
             alert("Recipe Already Added!");
         }
@@ -162,7 +157,6 @@ const displayRecipesSearch = async(number, search, searchWord) =>{
         const { data, error } = await supabase
             .from('recipeSample')
             .select()
-        //console.log(data);
         for(var i = 0; i < number; i++) {
             setRecipeCardSearch(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID, data[i].Link);
         }
@@ -188,7 +182,6 @@ const displayRecipesSearch = async(number, search, searchWord) =>{
                 .from('recipeSample')
                 .select()
                 .textSearch('Title', searchWord)
-            console.log(data);
             if (data.length === 0) {
                 alert("No Results Found!");
                 removeSearch();
@@ -457,7 +450,6 @@ const removeRecipeDate = async (id) => {
     let dateRemove = await dateCheck(id)
     let dateList = dateRemove.currentData;
     let date = getDate();
-    console.log(dateList);
     let index = dateList.indexOf("|" + date.monthName + "," + date.day + "," + date.year);
     index += date.monthName.length + date.day.length + date.year.length + 2;
     index = (dateList.indexOf(","+id, index));
@@ -488,6 +480,8 @@ function removeSearch(){
         lis[0].remove();
     }
 }
+
+//Check if user is logged in
 
 
 
