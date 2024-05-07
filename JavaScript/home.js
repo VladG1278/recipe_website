@@ -88,7 +88,7 @@ const getDateRecipe = async(ids) => {
         .in('ID', ids)
         console.log(data);
     for(var i =0; i <data.length; i++) {
-        setRecipeCardDate(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID);
+        setRecipeCardDate(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID, data[i].Link);
     }
     addEventListenerRemoveButtons();
 }
@@ -161,7 +161,7 @@ const displayRecipesSearch = async(number, search, searchWord) =>{
             .select()
         //console.log(data);
         for(var i = 0; i < number; i++) {
-            setRecipeCardSearch(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID);
+            setRecipeCardSearch(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID, data[i].Link);
         }
         //Change highlighted buttons
         let currentLikes = await getCurrentLiked();
@@ -169,7 +169,7 @@ const displayRecipesSearch = async(number, search, searchWord) =>{
         let recipeResults = document.getElementsByClassName("recipe1Button");
         for(var i=0; i < recipeResults.length; i++) {
             for (var j=1; j<currentLikesList.length; j++) {
-                if(currentLikesList[j] === recipeResults[i].parentElement.parentElement.parentElement.getAttribute('id')) {
+                if(currentLikesList[j] === recipeResults[i].parentElement.parentElement.parentElement.parentElement.getAttribute('id')) {
                     recipeResults[i].style.backgroundColor = 'yellow';
                 }
             }
@@ -189,11 +189,11 @@ const displayRecipesSearch = async(number, search, searchWord) =>{
             if (data.length === 0) {
                 alert("No Results Found!");
                 removeSearch();
-                displayRecipesSearch (1000, false, "");
+                displayRecipesSearch (250, false, "");
             } else {
                 removeSearch();
                 for(var i = 0; i < data.length; i++) {
-                    setRecipeCardSearch(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID);
+                    setRecipeCardSearch(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID, data[i].Link);
                 }
                 //Change highlighted buttons
                 let currentLikes = await getCurrentLiked();
@@ -201,7 +201,7 @@ const displayRecipesSearch = async(number, search, searchWord) =>{
                 let recipeResults = document.getElementsByClassName("recipe1Button");
                 for(var i=0; i < recipeResults.length; i++) {
                     for (var j=1; j<currentLikesList.length; j++) {
-                        if(currentLikesList[j] === recipeResults[i].parentElement.parentElement.parentElement.getAttribute('id')) {
+                        if(currentLikesList[j] === recipeResults[i].parentElement.parentElement.parentElement.parentElement.getAttribute('id')) {
                             recipeResults[i].style.backgroundColor = 'yellow';
                         }
                     }
@@ -300,7 +300,7 @@ const userID = async () => {
 
 
 //Sets Recipe Card for Search Bar on Left
-function setRecipeCardSearch (imageLink, title, recipeID){
+function setRecipeCardSearch (imageLink, title, recipeID, recipeLink){
     let ul = document.getElementById("currentRecipes");
     var card = document.createElement("li");
     card.setAttribute('class', 'recipeItem');
@@ -321,9 +321,12 @@ function setRecipeCardSearch (imageLink, title, recipeID){
 
     //Title Div
     var titleDiv = document.createElement('div');
+    var link = document.createElement("a");
+    link.setAttribute("href", recipeLink);
+    link.setAttribute("target", "_blank");
     titleDiv.setAttribute('class', "titleDiv");
     titleDiv.appendChild(header);
-    
+    link.appendChild(titleDiv);
     
     //Image Div 
 
@@ -354,7 +357,7 @@ function setRecipeCardSearch (imageLink, title, recipeID){
     let recipeCardContainerDiv = document.createElement("div");
     recipeCardContainerDiv.setAttribute('class', "recipeCardContainer");
     recipeCardContainerDiv.appendChild(imageDiv);
-    recipeCardContainerDiv.appendChild(titleDiv);
+    recipeCardContainerDiv.appendChild(link);
     recipeCardContainerDiv.appendChild(buttonDiv);
     
 
@@ -365,7 +368,7 @@ function setRecipeCardSearch (imageLink, title, recipeID){
 }
 
 //Function for current date recipe
-function setRecipeCardDate (imageLink, title, recipeID){
+function setRecipeCardDate (imageLink, title, recipeID, recipeLink){
     let ul = document.getElementById("dateRecipes");
     var card = document.createElement("li");
     card.setAttribute('class', 'recipeItemCurrent');
@@ -383,10 +386,13 @@ function setRecipeCardDate (imageLink, title, recipeID){
 
 
     //Title Div
+    var link = document.createElement("a");
+    link.setAttribute("href", recipeLink);
+    link.setAttribute("target", "_blank");
     var titleDiv = document.createElement('div');
     titleDiv.setAttribute('class', "titleDivCurrent");
     titleDiv.appendChild(header);
-    
+    link.appendChild(titleDiv);
     
     //Image Div 
     var imageDiv = document.createElement('div');
@@ -397,7 +403,7 @@ function setRecipeCardDate (imageLink, title, recipeID){
     var ITDiv = document.createElement('div');
     ITDiv.setAttribute('class', 'itdivCurrent');
     ITDiv.appendChild (imageDiv);
-    ITDiv.appendChild(titleDiv);
+    ITDiv.appendChild(link);
 
 
     //Remove Button
