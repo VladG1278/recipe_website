@@ -52,7 +52,7 @@ header{
 }
 
 .liItems{
-    max-width: 6rem;
+    max-width: 7rem;
     padding: 0.5rem;
     margin: .3rem;
 }
@@ -281,25 +281,31 @@ a:visited{
 
 
 .recipeImg{
-    max-height: 12vh;
-    max-width: 8.5vw;
+    max-height: 100px;
+    max-width: 100px;
 }
 
 .recipeCardHeader{
     text-align: center;
     font-size: 30px;
     overflow-x: auto;
+    user-select: none;
 }
 
 .imageDiv{
     align-self: center;
     margin-right: 5px;
+    max-width: 10vw;
+    width:10vw;
 }
 
 .titleDiv{
     align-content: center;
     max-width: 15vw;
     width: 15vw;
+    max-height: 100px;
+    height:100px;
+    overflow: auto;
 }
 
 .buttonDiv{
@@ -380,9 +386,15 @@ a:visited{
     align-items: center;
 }
 
+.titleDivCurrent {
+    max-width: 22vw;
+    width: 22vw;
+}
+
 .recipeImgCurrent{
-    max-height: 90px;
-    max-width: 90px;
+    max-height: 48px;
+    max-width: 50px;
+    align-self: center;
 }
 
 .recipeButtonCurrent{

@@ -9,7 +9,7 @@ supabase.auth.onAuthStateChange((event, session) => {
     }
   })
 
-
+  
 //Sign Out Event Listener
 elem.addEventListener('click', function(e) {
     e = e || window.event;
@@ -23,17 +23,142 @@ const signOut = async() =>{
 }
 
 //Get Date
-let element = document.getElementById("currentDateAdder");
-var dateHeader = element.innerText.split(" ");
-var currentDate = {monthName: dateHeader[0], day: dateHeader[1].substring(0,1), year: dateHeader[2]};
+function getDate () {
+    let element = document.getElementById("currentDateAdder");
+    var dateHeader = element.innerText.split(" ");
+    var currentDate = {monthName: dateHeader[0], day: dateHeader[1].substring(0,1), year: dateHeader[2]};
+    return currentDate;
+}
 
 
-//Displays Recipe on Search Bar on Left
-const displayRecipes = async(number) =>{
+//Add Event Listeners to Add Buttons
+function addEventListenerAddButtons (){
+    var buttonsAdd = document.getElementsByClassName("recipeButton");
+    for (var i =0; i < buttonsAdd.length; i++) {
+        buttonsAdd[i].addEventListener('click', function(ea) {
+            ea = ea || window.event;
+            var elementButtonA = ea.target || ea.srcElement;
+            console.log("test");
+                let id = elementButtonA.parentElement.parentElement.parentElement.getAttribute('id');
+                addRecipeDate(id);
+                setTimeout(displayDateRecipes, 2000);
+                
+        }, false);
+    }
+}
+
+//Add Event Listeners to Like Buttons
+function addEventListenerLikeButtons (){
+    let buttons = document.getElementsByClassName("recipe1Button");
+    for (var i =0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', function(e) {
+            e = e || window.event;
+            var elementButton = e.target || e.srcElement;
+                let recipeID = elementButton.parentElement.parentElement.parentElement.getAttribute('id');
+                addLiked(recipeID, elementButton);
+        }, false);
+    }
+}
+
+//Remove Recipie From Certain Date
+function addEventListenerRemoveButtons (){
+    let buttonsB = document.getElementsByClassName("recipeButtonCurrent");
+    for (var i =0; i < buttonsB.length; i++) {
+        buttonsB[i].addEventListener('click', function(ec) {
+            ec = ec || window.event;
+            var elementButtonB = ec.target || ec.srcElement;
+                let id = elementButtonB.parentElement.parentElement.getAttribute('id');
+                console.log(id)
+                removeRecipeDate(id);
+                setTimeout(displayDateRecipes, 2000);
+        }, false);
+    }
+}
+
+//Store date recipes in this format: 
+// |MonthName,Day,Year,id,id,id
+// Repear for new dates
+
+
+//Function to make recipe date card
+const getDateRecipe = async(ids) => {
     const { data, error } = await supabase
         .from('recipeSample')
         .select()
-    console.log(data);
+        .in('ID', ids)
+        console.log(data);
+    for(var i =0; i <data.length; i++) {
+        setRecipeCardDate(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID);
+    }
+    addEventListenerRemoveButtons();
+}
+
+//Display Recipe for Current Date
+//Only Display
+const displayDateRecipes = async() => {
+    removeCards();
+    const { data, error } = await supabase
+        .from('User Recipe')
+        .select('date_recipe')
+    let dateList = data[0].date_recipe.split("|");
+    let date = getDate();
+    for (var i=1; i <dateList.length; i++) {
+        dateList[i] = dateList[i].split(",");
+        if(dateList[i][0] === date.monthName && dateList[i][1] === date.day && dateList[i][2] === date.year) {
+            //display these recipes on this date
+            var tempDateList = [];
+            for (var j=3; j<dateList[i].length; j++){
+                tempDateList.push(dateList[i][j]);
+            }
+            getDateRecipe(tempDateList);
+            break;
+        } else {
+            continue;
+        }
+
+    }
+    
+}
+
+displayDateRecipes();
+
+//Add Recipe to Date Via ID
+const addRecipeDate = async(id) => {
+    var user = await userID();
+    var dateStuff = await dateCheck(id);
+    let date = getDate();
+    var dateFormat = "|" + date.monthName +","+ date.day + "," + date.year;
+    var recipeStuff;
+    var startIndex;
+    //True means date does not exist or ID is not being reused
+    
+    if (dateStuff.date){
+        recipeStuff = dateStuff.currentData + dateFormat + "," + id;
+    }else {
+        if(dateStuff.id) {
+            startIndex = dateStuff.currentData.indexOf(dateFormat) + dateFormat.length;
+            recipeStuff = dateStuff.currentData.substring(0,startIndex) + ","+id + dateStuff.currentData.substring(startIndex);
+            console.log("recipeStuff");
+        }else {
+            alert("Recipe Already Added!");
+        }
+    }
+    const { data, error } = await supabase
+        .from('User Recipe')
+        .update({
+        date_recipe : recipeStuff
+        })
+        .eq('id', user)
+}
+
+//Displays Recipe on Search Bar on Left
+//search is boolean, false means no search
+//number is length of results to display at a time
+const displayRecipesSearch = async(number, search) =>{
+    const { data, error } = await supabase
+        .from('recipeSample')
+        .select()
+    //console.log(data);
     for(var i = 0; i < number; i++) {
         setRecipeCardSearch(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID);
     }
@@ -48,22 +173,41 @@ const displayRecipes = async(number) =>{
             }
         }
     }
-
     addEventListenerLikeButtons();
+    addEventListenerAddButtons();
 }
-displayRecipes(50);
 
-//Add Event Listeners to All Buttons
-function addEventListenerLikeButtons (){
-    let buttons = document.getElementsByClassName("recipe1Button");
-    for (var i =0; i < buttons.length; i++) {
-        buttons[i].addEventListener('click', function(e) {
-            e = e || window.event;
-            var elementButton = e.target || e.srcElement;
-                let recipeID = elementButton.parentElement.parentElement.parentElement.getAttribute('id');
-                addLiked(recipeID, elementButton);
-        }, false);
+displayRecipesSearch(50, false);
+setUpClicking();
+
+
+
+//Check if date and ID exist already
+const dateCheck = async(id) => {
+    //True means date does not exist or ID is not being reused
+    var checkDate = {date: true, id: true, currentData:""};
+    const { data, error } = await supabase
+        .from('User Recipe')
+        .select('date_recipe')
+    checkDate.currentData = data[0].date_recipe;
+    let dateList = data[0].date_recipe.split("|");
+    let date = getDate();
+    for (var i=1; i <dateList.length; i++) {
+        dateList[i] = dateList[i].split(",");
+        if(dateList[i][0] === date.monthName && dateList[i][1] === date.day && dateList[i][2] === date.year) {
+            checkDate.date = false;
+            for (var j=3; j<dateList[i].length; j++){
+                if (dateList[i][j] === id) {
+                    checkDate.id = false;
+                }
+            }
+            break;
+        } else {
+            continue;
+        }
     }
+    
+    return checkDate;
 }
 
 
@@ -186,7 +330,7 @@ function setRecipeCardDate (imageLink, title, recipeID){
     let ul = document.getElementById("dateRecipes");
     var card = document.createElement("li");
     card.setAttribute('class', 'recipeItemCurrent');
-    
+    card.setAttribute('id', recipeID);
     //Image
     let img = document.createElement("img");
     img.setAttribute('class', 'recipeImgCurrent');
@@ -237,5 +381,57 @@ function setRecipeCardDate (imageLink, title, recipeID){
     
 }
 
+//Check for when date header changes to update recipes and remove previous ones
+//Unfortunately need to add another event listener that just rerurns displayDateRecipes()
+function setUpClicking () { 
+    cellClassNames = document.getElementsByClassName("date-picker");
+    for (var i =0; i < cellClassNames.length; i++) {
+        cellClassNames[i].addEventListener('click', function(eb) {
+            eb = eb || window.event;
+            var element1 = eb.target || eb.srcElement;
+                removeCards();
+                displayDateRecipes();
+                
+        }, false);
+    }
+}
 
-    
+function removeCards(){
+    let lis = document.getElementsByClassName("recipeItemCurrent")
+    while (lis.length > 0) {
+        lis[0].remove();
+    }
+}
+
+
+const removeRecipeDate = async (id) => {
+    let user = await userID();
+    let dateRemove = await dateCheck(id)
+    let dateList = dateRemove.currentData;
+    let date = getDate();
+    console.log(dateList);
+    let index = dateList.indexOf("|" + date.monthName + "," + date.day + "," + date.year);
+    index += date.monthName.length + date.day.length + date.year.length + 2;
+    index = (dateList.indexOf(","+id, index));
+    dateList = (dateList.substring(0,index) + dateList.substring(index + 1 + id.length));
+
+
+    const { data, error } = await supabase
+    .from('User Recipe')
+    .update({
+    date_recipe : dateList
+    })
+    .eq('id', user)
+}
+
+
+//Check for click on recipe title area. That opens new link with recipe information.
+
+
+
+
+
+
+
+
+ 
