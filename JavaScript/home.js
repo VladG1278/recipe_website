@@ -15,6 +15,8 @@ elem.addEventListener('click', function(e) {
     e = e || window.event;
     var element = e.target || e.srcElement;
         signOut();
+        removeCards();
+        alert("Signed Out!");
 }, false);
 
 //Sign Out
@@ -100,6 +102,7 @@ const displayDateRecipes = async() => {
     const { data, error } = await supabase
         .from('User Recipe')
         .select('date_recipe')
+        console.log(data);
     let dateList = data[0].date_recipe.split("|");
     let date = getDate();
     for (var i=1; i <dateList.length; i++) {

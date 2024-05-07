@@ -21,6 +21,21 @@ const createAcc = async() =>{
   
 }
 
+const { data } = supabase.auth.onAuthStateChange((event, session) => {
+    
+  console.log(event, session)
+
+  if (event === 'INITIAL_SESSION') {
+    // handle initial session
+  } else if (event === 'SIGNED_IN') {
+    alert("Signed In!")
+    document.getElementById("username").value = ""
+    document.getElementById("password").value = ""
+    window.location.href = "../index.html";
+    
+  }
+})
+
 
 
 
