@@ -6,6 +6,7 @@ supabase.auth.onAuthStateChange((event, session) => {
     } else if (event === "SIGNED_OUT") {
         elem.innerHTML = '<a href="Pages\\loginPage.html">Login</a>'
         "recipe1Button".style.backgroundColor = '';
+        displayRecipesSearch();
     }
   })
 
