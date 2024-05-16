@@ -5,8 +5,10 @@ supabase.auth.onAuthStateChange((event, session) => {
         elem.innerHTML = "Sign-Out";
     } else if (event === "SIGNED_OUT") {
         elem.innerHTML = '<a href="Pages\\loginPage.html">Login</a>'
-        "recipe1Button".style.backgroundColor = '';
-        displayRecipesSearch();
+        var likeButtons = document.getElementsByClassName("recipe1Button");
+        for (var i =0; i <likeButtons.length; i++) {
+            likeButtons[i].style.backgroundColor = "";
+        }
     }
   })
 
