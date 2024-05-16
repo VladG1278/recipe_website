@@ -268,12 +268,13 @@ a{
 .recipeItem {
     margin: 10px 3px;
     padding: 2px;
-    background-color: white;
+    background-color: rgb(218, 212, 212);
     max-height: 15vh;
     height: 15vh;
     max-width: 40vw;
     display: flex;
     align-content: center;
+    
 }
 
 .recipeCardContainer{
@@ -360,7 +361,7 @@ a{
 .recipeItemCurrent{
     display: flex;
     margin: 5px 0px;
-    background-color: white;
+    background-color: rgb(218, 212, 212);
     max-width: 35vw;
     max-height: 10vh;
     height: 8vh;

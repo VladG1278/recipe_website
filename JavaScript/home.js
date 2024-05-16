@@ -47,7 +47,7 @@ function addEventListenerAddButtons (){
             var elementButtonA = ea.target || ea.srcElement;
                 let id = elementButtonA.parentElement.parentElement.parentElement.getAttribute('id');
                 addRecipeDate(id);
-                setTimeout(displayDateRecipes, 2000);
+                setTimeout(displayDateRecipes, 1500);
                 
         }, false);
     }
@@ -75,7 +75,7 @@ function addEventListenerRemoveButtons (){
             var elementButtonB = ec.target || ec.srcElement;
                 let id = elementButtonB.parentElement.parentElement.getAttribute('id');
                 removeRecipeDate(id);
-                setTimeout(displayDateRecipes, 2000);
+                setTimeout(displayDateRecipes, 1500);
         }, false);
     }
 }
@@ -94,7 +94,7 @@ const getDateRecipe = async(ids) => {
     for(var i =0; i <data.length; i++) {
         setRecipeCardDate(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID, data[i].Link);
     }
-    addEventListenerLikeButtons();
+    addEventListenerRemoveButtons();
 }
 
 //Display Recipe for Current Date
@@ -108,8 +108,6 @@ const displayDateRecipes = async() => {
     let date = getDate();
     for (var i=1; i <dateList.length; i++) {
         dateList[i] = dateList[i].split(",");
-        console.log(dateList[i]);
-        console.log(date.day);
         if(dateList[i][0] === date.monthName && dateList[i][1] === date.day && dateList[i][2] === date.year) {
             //display these recipes on this date
             var tempDateList = [];
@@ -258,11 +256,13 @@ const getCurrentLiked = async() =>{
     const { data, error } = await supabase
     .from('User Recipe')
     .select('liked2')
-    if (error === null) {
+    if (data[0] === undefined) {
         alert ("Warning: You Are Not Logged In\nTo Use All Features Log In");
+    } else {
+        const value = data[0].liked2;
+        return value;
     }
-    const value = data[0].liked2;
-    return value;
+    
 }
 
 //Add Liked Recipe ID
@@ -493,7 +493,7 @@ function removeSearch(){
 
 document.getElementById("previous").addEventListener("click", setUpClicking);
 document.getElementById("next").addEventListener("click", setUpClicking);
-console.log("end");
+
 
 
 
