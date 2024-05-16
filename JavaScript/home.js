@@ -29,7 +29,11 @@ const signOut = async() =>{
 function getDate () {
     let element = document.getElementById("currentDateAdder");
     var dateHeader = element.innerText.split(" ");
-    var currentDate = {monthName: dateHeader[0], day: dateHeader[1].substring(0,1), year: dateHeader[2]};
+    var len = 1;
+    if (dateHeader[1].length > 2) {
+        len = 2;
+    }
+    var currentDate = {monthName: dateHeader[0], day: dateHeader[1].substring(0,len), year: dateHeader[2]};
     return currentDate;
 }
 
@@ -104,6 +108,8 @@ const displayDateRecipes = async() => {
     let date = getDate();
     for (var i=1; i <dateList.length; i++) {
         dateList[i] = dateList[i].split(",");
+        console.log(dateList[i]);
+        console.log(date.day);
         if(dateList[i][0] === date.monthName && dateList[i][1] === date.day && dateList[i][2] === date.year) {
             //display these recipes on this date
             var tempDateList = [];
@@ -431,8 +437,6 @@ function setUpClicking () {
         cellClassNames[i].addEventListener('click', function(eb) {
             eb = eb || window.event;
             var element1 = eb.target || eb.srcElement;
-                console.log("test");
-                removeCards();
                 displayDateRecipes();                
         }, false);
     }
@@ -482,8 +486,9 @@ function removeSearch(){
     }
 }
 
-
-
+document.getElementById("previous").addEventListener("click", setUpClicking);
+document.getElementById("next").addEventListener("click", setUpClicking);
+console.log("end");
 
 
 
