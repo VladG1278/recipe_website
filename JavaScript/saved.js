@@ -1,15 +1,68 @@
 import supabase from "../supabaseClient.js"
 console.log(supabase);
+let elem = document.getElementById("signOut");
+supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN'){
+        elem.innerHTML = "Sign-Out";
+    } else if (event === "SIGNED_OUT") {
+        elem.innerHTML = '<a href="./loginPage.html">Login</a>'
+        "recipe1Button".style.backgroundColor = '';
+    }
+  })
 
+//Sign Out Event Listener
+elem.addEventListener('click', function(e) {
+    e = e || window.event;
+    var element = e.target || e.srcElement;
+        signOut();
+        removeCards();
+        
+}, false);
 
+//Sign Out
+const signOut = async() =>{
+    const { error } = await supabase.auth.signOut();
+    alert("Signed Out!");
+}
+
+function removeCards(){
+    let lis = document.getElementsByClassName("recipeItem")
+    while (lis.length > 0) {
+        lis[0].remove();
+    }
+    var container = document.getElementById("container");
+        var message = document.createElement("h1");
+        message.innerHTML = "LOG IN TO ACCESS SAVED RECIPES";
+        message.style.color= "red";
+        message.style.fontSize = "32px";
+        message.style.fontFamily = "sans-serif";
+        message.style.overflow = "auto";
+        message.setAttribute("id", "he")
+        container.appendChild(message);
+}
 //Get Current Liked Recipes
 const getCurrentLiked = async() =>{
     const { data, error } = await supabase
     .from('User Recipe')
     .select('liked2')
-    console.log(data)
-    const value = data[0].liked2;
-    return value;
+    if(data === undefined) {
+        var container = document.getElementById("container");
+        var message = document.createElement("h1");
+        message.innerHTML = "LOG IN TO ACCESS SAVED RECIPES";
+        message.style.color= "red";
+        message.style.fontSize = "32px";
+        message.style.fontFamily = "sans-serif";
+        message.style.overflow = "auto";
+        message.setAttribute("id", "he")
+        container.appendChild(message);
+    } else {
+        const value = data[0].liked2;
+        if (document.getElementById("he")!= null) {
+            document.getElementById("he").remove();
+        }
+        return value;
+    }
+    
     
 }
 

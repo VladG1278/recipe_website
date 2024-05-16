@@ -258,6 +258,9 @@ const getCurrentLiked = async() =>{
     const { data, error } = await supabase
     .from('User Recipe')
     .select('liked2')
+    if (error === null) {
+        alert ("Warning: You Are Not Logged In\nTo Use All Features Log In");
+    }
     const value = data[0].liked2;
     return value;
 }
@@ -371,6 +374,8 @@ function setRecipeCardSearch (imageLink, title, recipeID, recipeLink){
 }
 
 //Function for current date recipe
+//Adds clickable link
+//Change to work for downloaded recipes
 function setRecipeCardDate (imageLink, title, recipeID, recipeLink){
     let ul = document.getElementById("dateRecipes");
     var card = document.createElement("li");
@@ -470,7 +475,7 @@ const removeRecipeDate = async (id) => {
 }
 
 
-//Check for click on recipe title area. That opens new link with recipe information.
+//Submits Search Bar
 document.getElementById("searchSubmit").addEventListener("click", myFunction)
 function myFunction(event){
     event.preventDefault();
