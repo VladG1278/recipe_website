@@ -1,0 +1,194 @@
+body{
+    background-color: rgb(211, 201, 188);
+}
+
+
+/* Reset */
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style-type: none;
+    box-sizing: border-box;
+}
+
+
+/* Nav Bar at top of each page */
+.navBar{
+    background: antiquewhite;
+    padding: 2rem;
+    margin: auto;
+    font-family: sans-serif;
+    font-size: 1.3rem;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    height: 4rem;
+}
+
+header{
+    border:1px;
+    box-shadow: 0 1.25rem 6.25rem rgba(0, 0, 0, 0.3);
+}
+
+
+/* Links to other pages at top left */
+.navBarTitleList{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+    justify-content: space-evenly;
+    color: #6936f5;
+    font-family:cursive;
+}
+
+.navBarList{
+    display: flex;
+    justify-content: right; 
+    flex-direction: row;
+    align-items: center;   
+}
+
+.liItems{
+    max-width: 7rem;
+    padding: 0.5rem;
+    margin: .3rem;
+}
+
+
+.liItems:hover{
+    box-shadow: inset 90px 0 0 0 brown;
+    color: green;
+    cursor: pointer;
+}
+
+
+
+a:visited{
+    color: #333;
+    background-color: transparent;
+}
+
+a{
+    color:#333;
+    background-color: transparent;
+}
+
+.logoImg{
+    height: 4.0rem;
+    width: 4.0rem;
+    margin-right: .2rem;
+    margin-top: .35rem;
+    align-self: center;
+}
+
+
+.likedContainer {
+    margin: 7vh 25vw;
+    background-color: aliceblue;
+    max-height: 80vh;
+    height: 80vh;
+    max-width: 50vw;
+    display: flex;
+    align-self: center;
+    overflow: auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+}
+/* Card */
+.recipeList{
+    display: flex;
+    flex-direction: column;
+    max-width: 70vw;
+    max-height: 70vh;
+
+}
+
+.recipeItem {
+    margin: 10px 3px;
+    padding: 2px;
+    background-color: white;
+    max-height: 15vh;
+    height: 15vh;
+    max-width: 40vw;
+    display: flex;
+    align-content: center;
+}
+
+.recipeCardContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.recipeImg{
+    max-height: 100px;
+    max-width: 100px;
+}
+
+.recipeCardHeader{
+    text-align: center;
+    font-size: 30px;
+    overflow-x: auto;
+    user-select: none;
+}
+
+.imageDiv{
+    align-self: center;
+    margin-right: 5px;
+    max-width: 10vw;
+    width:10vw;
+}
+
+.titleDiv{
+    align-content: center;
+    max-width: 15vw;
+    width: 15vw;
+    max-height: 100px;
+    height:100px;
+    overflow: auto;
+}
+
+.buttonDiv{
+    /* margin-left: 8vw; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    max-width: 10vw;
+    width:10vw;
+}
+
+/* Add Button */
+.recipeButton{
+    max-height: 60px;
+    max-width: 60px;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    border: 0;
+    font-size: 38px;
+    text-align: center;
+    justify-content: center;
+    margin: .5vw;
+}
+
+/* Like Button */
+.recipe1Button{
+    max-height: 60px;
+    max-width: 60px;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    border: 0;
+    font-size: 38px;
+    text-align: center;
+    justify-content: center;
+    margin: .5vw;
+}
+

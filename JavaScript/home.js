@@ -16,12 +16,13 @@ elem.addEventListener('click', function(e) {
     var element = e.target || e.srcElement;
         signOut();
         removeCards();
-        alert("Signed Out!");
+        
 }, false);
 
 //Sign Out
 const signOut = async() =>{
     const { error } = await supabase.auth.signOut();
+    alert("Signed Out!");
 }
 
 //Get Date
@@ -89,7 +90,7 @@ const getDateRecipe = async(ids) => {
     for(var i =0; i <data.length; i++) {
         setRecipeCardDate(data[i].Image, data[i].Title.replace('Be the first to rate & review!', ''), data[i].ID, data[i].Link);
     }
-    addEventListenerRemoveButtons();
+    addEventListenerLikeButtons();
 }
 
 //Display Recipe for Current Date
@@ -166,7 +167,7 @@ const displayRecipesSearch = async(number, search, searchWord) =>{
         let recipeResults = document.getElementsByClassName("recipe1Button");
         for(var i=0; i < recipeResults.length; i++) {
             for (var j=1; j<currentLikesList.length; j++) {
-                if(currentLikesList[j] === recipeResults[i].parentElement.parentElement.parentElement.parentElement.getAttribute('id')) {
+                if(currentLikesList[j] === recipeResults[i].parentElement.parentElement.parentElement.getAttribute('id')) {
                     recipeResults[i].style.backgroundColor = 'yellow';
                 }
             }
@@ -430,9 +431,9 @@ function setUpClicking () {
         cellClassNames[i].addEventListener('click', function(eb) {
             eb = eb || window.event;
             var element1 = eb.target || eb.srcElement;
+                console.log("test");
                 removeCards();
-                displayDateRecipes();
-                
+                displayDateRecipes();                
         }, false);
     }
 }
@@ -481,7 +482,6 @@ function removeSearch(){
     }
 }
 
-//Check if user is logged in
 
 
 

@@ -95,7 +95,7 @@ function showCalendar(month, year) {
         }
         tbl.appendChild(row);
     }
-    setUpClicking();
+    setUpClicking1();
 }
 function daysInMonth(iMonth, iYear) {
     return 32 - new Date(iYear, iMonth, 32).getDate();
@@ -106,7 +106,7 @@ var cellDate = {number:today.getDate(), month:currentMonth, year:currentYear, mo
 dateHeader(cellDate);
 
 //Add Event Listeners to All Cells that highlight and change date when clicked
-function setUpClicking () { 
+function setUpClicking1 () { 
     cellClassNames = document.getElementsByClassName("date-picker");
     for (var i =0; i < cellClassNames.length; i++) {
         cellClassNames[i].addEventListener('click', function(e) {
