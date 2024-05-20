@@ -1,0 +1,1 @@
+This is the code for a meal planning website that allows you to assign recipes to different days. The recipes are stored via supabase. There is a hidden JS file that intializes a supabase object so to replicate you need to make your own!
